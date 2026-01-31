@@ -67,7 +67,7 @@ function TodoDashboard() {
         return
       }
 
-      const res = await auth.fetchWithAuth(`http://localhost:4000/api/todos/${id}`, { method: 'DELETE' })
+      const res = await auth.fetchWithAuth(`https://todo-list-z3l4.onrender.com/api/todos/${id}`, { method: 'DELETE' })
 
       // try to parse response body for a helpful message
       let body = null
@@ -126,7 +126,7 @@ function TodoDashboard() {
                   <form onSubmit={async (e) => {
                     e.preventDefault()
                     try {
-                      const res = await auth.fetchWithAuth(`http://localhost:4000/api/todos/${editingId}`, {
+                      const res = await auth.fetchWithAuth(`https://todo-list-z3l4.onrender.com/api/todos/${editingId}`, {
                         method: 'PUT',
                         headers: { 'Content-Type': 'application/json' },
                         body: JSON.stringify(editValues)

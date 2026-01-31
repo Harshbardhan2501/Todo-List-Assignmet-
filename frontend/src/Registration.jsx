@@ -35,7 +35,7 @@ function Registration() {
     if (!validate()) return
 
     setLoading(true)
-    fetch('http://localhost:4000/api/auth/register', {
+    fetch('https://todo-list-z3l4.onrender.com/api/auth/register', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ email, username, password }),

@@ -15,7 +15,7 @@ function Login() {
     setError(null)
     setLoading(true)
     try {
-      const res = await fetch('http://localhost:4000/api/auth/login', {
+      const res = await fetch('https://todo-list-z3l4.onrender.com/api/auth/login', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         credentials: 'include', // allow cookie to be set
@@ -31,7 +31,7 @@ function Login() {
           // server may set an HttpOnly cookie instead of returning token
           // call /api/auth/me to retrieve user info from cookie
           try {
-            const meRes = await fetch('http://localhost:4000/api/auth/me', { credentials: 'include' })
+            const meRes = await fetch('https://todo-list-z3l4.onrender.com/api/auth/me', { credentials: 'include' })
             const meData = await meRes.json()
             if (meRes.ok && meData.user && meData.user.id) {
               // if server returned a token in meData, use it; otherwise we keep auth state minimal
