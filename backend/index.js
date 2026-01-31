@@ -7,8 +7,20 @@ dotenv.config()
 
 const app = express()
 // enable CORS for the frontend so credentials (cookies) can be sent
-const FRONTEND_ORIGIN = process.env.FRONTEND_ORIGIN || 'http://localhost:5173'
-app.use(cors({ origin: FRONTEND_ORIGIN, credentials: true }))
+// Support multiple origins via comma-separated env var FRONTEND_ORIGINS
+const FRONTEND_ORIGINS = (process.env.FRONTEND_ORIGINS || 'http://localhost:5173')
+  .split(',')
+  .map(s => s.trim())
+
+app.use(cors({
+  origin: function (origin, callback) {
+    // allow requests like curl or mobile apps with no origin
+    if (!origin) return callback(null, true)
+    if (FRONTEND_ORIGINS.indexOf(origin) !== -1) return callback(null, true)
+    return callback(new Error('CORS not allowed by server'))
+  },
+  credentials: true,
+}))
 // express will set cookies via res.cookie() without extra middleware
 app.use(express.json())
 
