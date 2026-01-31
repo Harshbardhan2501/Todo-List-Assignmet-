@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import { useNavigate, Link } from 'react-router-dom'
 
+const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:4000'
 const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
 
 function Registration() {
@@ -35,7 +36,7 @@ function Registration() {
     if (!validate()) return
 
     setLoading(true)
-    fetch('https://todo-list-z3l4.onrender.com/api/auth/register', {
+    fetch(`${API_URL}/api/auth/register`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ email, username, password }),

@@ -2,6 +2,8 @@ import React, { useEffect, useState } from 'react'
 import { useAuth } from './auth/AuthProvider'
 import { useNavigate } from 'react-router-dom'
 
+const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:4000'
+
 function TodoDashboard() {
   const auth = useAuth()
   const [todos, setTodos] = useState([])
@@ -17,7 +19,7 @@ function TodoDashboard() {
   async function load() {
     setLoading(true)
     try {
-      const res = await auth.fetchWithAuth('http://localhost:4000/api/todos')
+      const res = await auth.fetchWithAuth(`${API_URL}/api/todos`)
       if (!res.ok) {
         console.error('Failed fetching todos')
         setTodos([])
@@ -38,7 +40,7 @@ function TodoDashboard() {
     e.preventDefault()
     if (!title) return
     try {
-      const res = await auth.fetchWithAuth('http://localhost:4000/api/todos', {
+      const res = await auth.fetchWithAuth(`${API_URL}/api/todos`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ title, description, dueDate: dueDate || undefined, category }),
@@ -67,7 +69,7 @@ function TodoDashboard() {
         return
       }
 
-      const res = await auth.fetchWithAuth(`https://todo-list-z3l4.onrender.com/api/todos/${id}`, { method: 'DELETE' })
+      const res = await auth.fetchWithAuth(`${API_URL}/api/todos/${id}`, { method: 'DELETE' })
 
       // try to parse response body for a helpful message
       let body = null
@@ -126,7 +128,7 @@ function TodoDashboard() {
                   <form onSubmit={async (e) => {
                     e.preventDefault()
                     try {
-                      const res = await auth.fetchWithAuth(`https://todo-list-z3l4.onrender.com/api/todos/${editingId}`, {
+                      const res = await auth.fetchWithAuth(`${API_URL}/api/todos/${editingId}`, {
                         method: 'PUT',
                         headers: { 'Content-Type': 'application/json' },
                         body: JSON.stringify(editValues)

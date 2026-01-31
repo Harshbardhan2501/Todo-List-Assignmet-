@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react'
 import { useNavigate, Link } from 'react-router-dom'
 import { useAuth } from './auth/AuthProvider'
 
+const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:4000'
+
 function Login() {
   const navigate = useNavigate()
   const auth = useAuth()

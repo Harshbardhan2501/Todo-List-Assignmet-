@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react'
 import { useAuth } from './auth/AuthProvider'
 
+const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:4000'
+
 function AdminDashboard() {
   const auth = useAuth()
   const [users, setUsers] = useState([])
@@ -8,7 +10,7 @@ function AdminDashboard() {
 
   async function loadUsers() {
     try {
-      const res = await auth.fetchWithAuth('http://localhost:4000/api/admin/users')
+      const res = await auth.fetchWithAuth(`${API_URL}/api/admin/users`)
       if (!res.ok) return
       setUsers(await res.json())
     } catch (e) { console.error(e) }
@@ -16,7 +18,7 @@ function AdminDashboard() {
 
   async function loadTodos() {
     try {
-      const res = await auth.fetchWithAuth('http://localhost:4000/api/admin/todos')
+      const res = await auth.fetchWithAuth(`${API_URL}/api/admin/todos`)
       if (!res.ok) return
       setTodos(await res.json())
     } catch (e) { console.error(e) }
@@ -30,7 +32,7 @@ function AdminDashboard() {
 
   async function changeRole(id, role) {
     try {
-      const res = await auth.fetchWithAuth(`http://localhost:4000/api/admin/users/${id}/role`, {
+      const res = await auth.fetchWithAuth(`${API_URL}/api/admin/users/${id}/role`, {
         method: 'PATCH',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ role })
